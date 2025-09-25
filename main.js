@@ -11,9 +11,10 @@ class TicTacToe {
     ];
   }
 
-  playerMove() {
+  playerMove(row, col) {
     // add X or O to board at proper index
-    // checkWinner()
+    this.board[row][col] = this.currentPlayer;
+    this.checkWinner();
   }
 
   checkWinner() {
@@ -23,13 +24,44 @@ class TicTacToe {
     // down: board[0][0] === board[1][0] === board[2][0]
     // diagonal: board[0][0] === board[1][1] === board[2][2]
     // other diagonal: board[0][2] === board[1][1] === board[2][0]
-    // if no winner, changeTurn()
+
+    console.log("Checking for winner");
+    if (
+      (this.board[0][0] &&
+        this.board[0][0] === this.board[0][1] &&
+        this.board[0][1] === this.board[0][2]) ||
+      (this.board[0][0] &&
+        this.board[0][0] === this.board[1][0] &&
+        this.board[1][0] === this.board[2][0]) ||
+      (this.board[0][0] &&
+        this.board[0][0] === this.board[1][1] &&
+        this.board[1][1] === this.board[2][2]) ||
+      (this.board[0][2] &&
+        this.board[0][2] === this.board[1][1] &&
+        this.board[1][1] === this.board[2][0])
+    ) {
+      this.winner = this.currentPlayer;
+      console.log(`Player ${this.winner} has won!`);
+    } else {
+      // if no winner, changeTurn()
+      console.log("No winner yet");
+      this.changeTurn();
+    }
   }
 
   changeTurn() {
     // after play, change to next player
+    console.log("Changing Turns");
     this.currentPlayer === "X"
       ? (this.currentPlayer = "O")
       : (this.currentPlayer = "X");
   }
 }
+
+const game = new TicTacToe();
+
+game.playerMove(0, 0);
+game.playerMove(0, 1);
+game.playerMove(1, 1);
+game.playerMove(1, 2);
+game.playerMove(2, 2); // player X wins
