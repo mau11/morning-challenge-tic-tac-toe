@@ -1,8 +1,9 @@
 // Reference: https://thejsway.net/chapter09/
 
 // Set variables
-let currentTurn = document.querySelector("span");
-let result = document.querySelector("h3");
+const currentTurn = document.querySelector("span");
+const result = document.querySelector("h3");
+const ul = document.querySelector("ul");
 
 class TicTacToe {
   constructor() {
@@ -17,7 +18,6 @@ class TicTacToe {
 
   newBoard() {
     console.log("New Game is starting...");
-    const ul = document.querySelector("ul");
 
     for (let i = 0; i < 9; i++) {
       const li = document.createElement("li");
@@ -124,10 +124,21 @@ class TicTacToe {
       li.onclick = null;
     });
   }
+
+  reset() {
+    this.board = [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ];
+    ul.innerHTML = "";
+    result.innerHTML = "Turn: Player <span>X</span>";
+    this.newBoard();
+  }
 }
 
 const game = new TicTacToe();
 game.newBoard();
 
 // Allow game reset
-document.querySelector("p").onclick = () => game.newBoard();
+document.querySelector("p").onclick = () => game.reset();
