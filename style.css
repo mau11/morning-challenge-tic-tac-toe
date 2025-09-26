@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+body {
+  max-width: 80vw;
+  margin: auto;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -12,12 +17,15 @@ main {
   margin: auto;
 }
 
-section {
+ul {
   display: flex;
+  list-style: none;
+  flex-wrap: wrap;
 }
 
-div {
+li {
   border: 1px solid black;
   height: 80px;
   width: 80px;
+  flex: calc(100% / 3);
 }
