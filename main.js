@@ -3,6 +3,8 @@
 // Set variables
 const result = document.querySelector("h2");
 const ul = document.querySelector("ul");
+// Keep track of total number of player moves
+let moves = 0;
 
 // Look up board index based on click
 const indexMap = {
@@ -29,7 +31,7 @@ class TicTacToe {
 
   newBoard() {
     console.log("New Game is starting...");
-
+    moves = 0;
     for (let i = 0; i < 9; i++) {
       const li = document.createElement("li");
       li.id = `sq-${i}`;
@@ -41,6 +43,8 @@ class TicTacToe {
   }
 
   playerMove(i) {
+    moves++;
+
     // Add X or O to board based on player click
     const square = document.getElementById(`sq-${i}`);
     const row = indexMap[i][0];
@@ -60,8 +64,16 @@ class TicTacToe {
   }
 
   checkWinner() {
+    if (moves === 9) {
+      // Add gameover styling
+      document.querySelectorAll("li").forEach((li) => {
+        li.classList.add("gameover");
+        li.classList.remove("selected");
+      });
+      result.innerText = `GAME OVER`;
+    }
     // Check rows
-    if (
+    else if (
       this.board[0][0] &&
       this.board[0][0] === this.board[0][1] &&
       this.board[0][1] === this.board[0][2]
