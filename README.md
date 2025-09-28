@@ -1,3 +1,7 @@
+![Screenshot of completed Tic Tac Toe Game](./images/screenshot.png)
+
+Deployed on vercel: https://morning-challenge-tic-tac-toe.vercel.app/
+
 # 📊 Morning Challenge: Tic-Tac-Toe
 
 ### Goal: Create a two player Tic-Tac-Toe game. The users should be able to click to place their X or O and if they win the program should mention their win in the DOM. Please make the game as OOP as possible.
@@ -15,6 +19,7 @@
   - Anything specific on which you want feedback!
 
 Example:
+
 ```
 I completed the challenge: 5
 I feel good about my code: 4
