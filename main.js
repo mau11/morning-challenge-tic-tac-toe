@@ -1,7 +1,7 @@
 // Reference: https://thejsway.net/chapter09/
 
 // Set variables
-const result = document.querySelector("h3");
+const result = document.querySelector("h2");
 const ul = document.querySelector("ul");
 
 // Look up board index based on click
