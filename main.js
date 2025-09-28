@@ -1,14 +1,12 @@
 // Reference: https://thejsway.net/chapter09/
 
 // Set variables
-const currentTurn = document.querySelector("span");
 const result = document.querySelector("h3");
 const ul = document.querySelector("ul");
 
 class TicTacToe {
   constructor() {
     this.currentPlayer = "X";
-    this.winner = "";
     this.board = [
       [null, null, null],
       [null, null, null],
@@ -105,6 +103,7 @@ class TicTacToe {
   changeTurn() {
     // After play, change to next player
     console.log("Changing turns");
+    const currentTurn = document.querySelector("span");
     if (this.currentPlayer === "X") {
       this.currentPlayer = "O";
       currentTurn.innerText = "O";
@@ -115,9 +114,8 @@ class TicTacToe {
   }
 
   announceWinner() {
-    this.winner = this.currentPlayer;
-    result.innerText = `Player ${this.winner} has won!`;
-    console.log(`Player ${this.winner} has won!`);
+    result.innerText = `Player ${this.currentPlayer} has won!`;
+    console.log(`Player ${this.currentPlayer} has won!`);
 
     // Remove event listeners when game is over
     document.querySelectorAll("li").forEach((li) => {
@@ -131,6 +129,7 @@ class TicTacToe {
       [null, null, null],
       [null, null, null],
     ];
+    this.currentPlayer = "X";
     ul.innerHTML = "";
     result.innerHTML = "Turn: Player <span>X</span>";
     this.newBoard();
