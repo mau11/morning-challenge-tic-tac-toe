@@ -4,6 +4,19 @@
 const result = document.querySelector("h3");
 const ul = document.querySelector("ul");
 
+// Look up board index based on click
+const indexMap = {
+  0: [0, 0],
+  1: [0, 1],
+  2: [0, 2],
+  3: [1, 0],
+  4: [1, 1],
+  5: [1, 2],
+  6: [2, 0],
+  7: [2, 1],
+  8: [2, 2],
+};
+
 class TicTacToe {
   constructor() {
     this.currentPlayer = "X";
@@ -28,23 +41,13 @@ class TicTacToe {
   }
 
   playerMove(i) {
-    // Look up board index based on click
-    let indexMap = {
-      0: [0, 0],
-      1: [0, 1],
-      2: [0, 2],
-      3: [1, 0],
-      4: [1, 1],
-      5: [1, 2],
-      6: [2, 0],
-      7: [2, 1],
-      8: [2, 2],
-    };
-
     // Add X or O to board based on player click
     const square = document.getElementById(`sq-${i}`);
     const row = indexMap[i][0];
     const col = indexMap[i][1];
+
+    // Add class to selected squares (for styling)
+    square.classList.add("selected");
 
     if (this.board[row][col] === null) {
       square.innerText = this.currentPlayer;
@@ -59,40 +62,55 @@ class TicTacToe {
   checkWinner() {
     // Check rows
     if (
-      (this.board[0][0] &&
-        this.board[0][0] === this.board[0][1] &&
-        this.board[0][1] === this.board[0][2]) ||
-      (this.board[1][0] &&
-        this.board[1][0] === this.board[1][1] &&
-        this.board[1][1] === this.board[1][2]) ||
-      (this.board[2][0] &&
-        this.board[2][0] === this.board[2][1] &&
-        this.board[2][1] === this.board[2][2])
+      this.board[0][0] &&
+      this.board[0][0] === this.board[0][1] &&
+      this.board[0][1] === this.board[0][2]
     ) {
-      this.announceWinner();
+      this.announceWinner([0, 1, 2]);
+    } else if (
+      this.board[1][0] &&
+      this.board[1][0] === this.board[1][1] &&
+      this.board[1][1] === this.board[1][2]
+    ) {
+      this.announceWinner([3, 4, 5]);
+    } else if (
+      this.board[2][0] &&
+      this.board[2][0] === this.board[2][1] &&
+      this.board[2][1] === this.board[2][2]
+    ) {
+      this.announceWinner([6, 7, 8]);
     } else if (
       // Check columns
-      (this.board[0][0] &&
-        this.board[0][0] === this.board[1][0] &&
-        this.board[1][0] === this.board[2][0]) ||
-      (this.board[0][1] &&
-        this.board[0][1] === this.board[1][1] &&
-        this.board[1][1] === this.board[2][1]) ||
-      (this.board[0][2] &&
-        this.board[0][2] === this.board[1][2] &&
-        this.board[1][2] === this.board[2][2])
+      this.board[0][0] &&
+      this.board[0][0] === this.board[1][0] &&
+      this.board[1][0] === this.board[2][0]
     ) {
-      this.announceWinner();
+      this.announceWinner([0, 3, 6]);
+    } else if (
+      this.board[0][1] &&
+      this.board[0][1] === this.board[1][1] &&
+      this.board[1][1] === this.board[2][1]
+    ) {
+      this.announceWinner([1, 4, 7]);
+    } else if (
+      this.board[0][2] &&
+      this.board[0][2] === this.board[1][2] &&
+      this.board[1][2] === this.board[2][2]
+    ) {
+      this.announceWinner([2, 5, 8]);
     } else if (
       // Check diagonals
-      (this.board[0][0] &&
-        this.board[0][0] === this.board[1][1] &&
-        this.board[1][1] === this.board[2][2]) ||
-      (this.board[0][2] &&
-        this.board[0][2] === this.board[1][1] &&
-        this.board[1][1] === this.board[2][0])
+      this.board[0][0] &&
+      this.board[0][0] === this.board[1][1] &&
+      this.board[1][1] === this.board[2][2]
     ) {
-      this.announceWinner();
+      this.announceWinner([0, 4, 8]);
+    } else if (
+      this.board[0][2] &&
+      this.board[0][2] === this.board[1][1] &&
+      this.board[1][1] === this.board[2][0]
+    ) {
+      this.announceWinner([2, 4, 6]);
     } else {
       // if no winner, changeTurn()
       console.log("No winner yet");
@@ -113,13 +131,20 @@ class TicTacToe {
     }
   }
 
-  announceWinner() {
+  announceWinner(winningThree) {
+    // Add classes to winning squares for styling
+    winningThree.forEach((i) => {
+      document.getElementById(`sq-${i}`).classList.add("winner");
+    });
+
     result.innerText = `Player ${this.currentPlayer} has won!`;
     console.log(`Player ${this.currentPlayer} has won!`);
 
-    // Remove event listeners when game is over
+    // Remove event listeners + hover styling when game is over
     document.querySelectorAll("li").forEach((li) => {
       li.onclick = null;
+      li.classList.add("gameover");
+      li.classList.remove("selected");
     });
   }
 
